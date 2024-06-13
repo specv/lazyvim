@@ -4,6 +4,10 @@ return {
     triggers_nowait = {
       -- spelling
       "z=",
+    },
+    defaults = {
+      ["<leader><tab>"] = { name = "<deprecated>" },
+      ["<leader>t"] = { name = "tabs" },
     }
   },
 }
