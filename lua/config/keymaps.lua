@@ -35,6 +35,7 @@ map("n", "<leader>wh", "<C-w>h", { desc = "Go to Left Window" })
 map("n", "<leader>wj", "<C-w>j", { desc = "Go to Lower Window" })
 map("n", "<leader>wk", "<C-w>k", { desc = "Go to Upper Window" })
 map("n", "<leader>wl", "<C-w>l", { desc = "Go to Right Window" })
+map("n", "<leader>wz", "<cmd>ZenMode<cr>", { desc = "Zen Mode" })
 map("n", "<A-f>", function() LazyVim.toggle.maximize() end, { desc = "Maximize Toggle" })
 
 -- Tabs
