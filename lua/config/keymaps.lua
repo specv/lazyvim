@@ -17,7 +17,8 @@ map("n", "<A-H>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width
 map("n", "<A-L>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 
 -- Buffers
-map("n", "<leader>bb", "<cmd>Telescope buffers<cr>", { desc = "Buffers" })
+map("n", "<leader>bb", "<cmd>Telescope scope buffers<cr>", { desc = "Buffers" })
+map("n", "<leader>bB", "<cmd>Telescope buffers<cr>", { desc = "Current Tab Buffers" })
 map("n", "<leader>br", "<cmd>e #<cr>", { desc = "Switch to Recent Buffer" })
 map("n", "<leader>bs", "<cmd>:ls<cr>", { desc = "List Buffers" })
 map("n", "<leader>bx", "<cmd>:bd<cr>", { desc = "Delete Buffer" })
