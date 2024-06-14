@@ -27,6 +27,16 @@ map("n", "<leader>bl", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<A-,>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "<A-.>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 
+-- Windows
+map("n", "<leader>ww", "<cmd>Telescope windows<cr>", { desc = "Windows" })
+map("n", "<leader>wr", "<C-w>p", { desc = "Switch to Recent Window" })
+map("n", "<leader>wx", "<C-w>c", { desc = "Delete Window" })
+map("n", "<leader>wh", "<C-w>h", { desc = "Go to Left Window" })
+map("n", "<leader>wj", "<C-w>j", { desc = "Go to Lower Window" })
+map("n", "<leader>wk", "<C-w>k", { desc = "Go to Upper Window" })
+map("n", "<leader>wl", "<C-w>l", { desc = "Go to Right Window" })
+map("n", "<A-f>", function() LazyVim.toggle.maximize() end, { desc = "Maximize Toggle" })
+
 -- Tabs
 map("n", "<leader>tt", "<cmd>Telescope telescope-tabs list_tabs<cr>", { desc = "Tabs"})
 map("n", "<leader>tr", "g<tab>", { desc = "Switch to Recent Tab" })
