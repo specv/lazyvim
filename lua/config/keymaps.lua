@@ -16,17 +16,6 @@ map("n", "<A-K>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
 map("n", "<A-H>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
 map("n", "<A-L>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 
--- Buffers
-map("n", "<leader>bb", "<cmd>Telescope scope buffers<cr>", { desc = "Buffers" })
-map("n", "<leader>bB", "<cmd>Telescope buffers<cr>", { desc = "Current Tab Buffers" })
-map("n", "<leader>br", "<cmd>e #<cr>", { desc = "Switch to Recent Buffer" })
-map("n", "<leader>bs", "<cmd>:ls<cr>", { desc = "List Buffers" })
-map("n", "<leader>bx", "<cmd>:bd<cr>", { desc = "Delete Buffer" })
-map("n", "<leader>bh", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-map("n", "<leader>bl", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-map("n", "<A-,>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-map("n", "<A-.>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-
 -- Windows
 map("n", "<leader>ww", "<cmd>Telescope windows<cr>", { desc = "Windows" })
 map("n", "<leader>wr", "<C-w>p", { desc = "Switch to Recent Window" })
@@ -37,6 +26,20 @@ map("n", "<leader>wk", "<C-w>k", { desc = "Go to Upper Window" })
 map("n", "<leader>wl", "<C-w>l", { desc = "Go to Right Window" })
 map("n", "<leader>wz", "<cmd>ZenMode<cr>", { desc = "Zen Mode" })
 map("n", "<A-f>", function() LazyVim.toggle.maximize() end, { desc = "Maximize Toggle" })
+
+-- Buffers
+map("n", "<leader>bb", "<cmd>Telescope scope buffers<cr>", { desc = "Buffers" })
+map("n", "<leader>bB", "<cmd>Telescope buffers<cr>", { desc = "Current Tab Buffers" })
+map("n", "<leader>br", "<cmd>e #<cr>", { desc = "Switch to Recent Buffer" })
+map("n", "<leader>bs", "<cmd>:ls<cr>", { desc = "List Buffers" })
+map("n", "<leader>bx", "<cmd>:bd<cr>", { desc = "Delete Buffer" })
+map("n", "<leader>bh", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+map("n", "<leader>bl", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+map("n", "<A-,>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+map("n", "<A-.>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+for n = 1, 9 do
+  map("n", "g" .. n, function() require("bufferline").go_to_buffer(n, true) end, { silent = true, desc = 'which_key_ignore' })
+end
 
 -- Tabs
 map("n", "<leader>tt", "<cmd>Telescope telescope-tabs list_tabs<cr>", { desc = "Tabs"})
