@@ -11,5 +11,15 @@ return {
         }
       }
     },
+    extensions = {
+      zoxide = {
+        mappings = {
+          ["<CR>"] = { action = function(selection)
+            vim.cmd.Neotree(selection.path)
+            vim.cmd.tcd(selection.path)
+          end },
+        }
+      }
+    }
   },
 }
