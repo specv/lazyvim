@@ -1,5 +1,8 @@
 return {
   "nvim-telescope/telescope.nvim",
+  keys = {
+    {"<leader>fb", false},
+  },
   opts = {
     defaults = {
       mappings = {
