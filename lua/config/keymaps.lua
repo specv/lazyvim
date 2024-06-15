@@ -5,16 +5,16 @@
 local map = LazyVim.safe_keymap_set
 
 -- Move to window
-map("n", "<A-h>", "<C-w>h", { desc = "Go to Left Window" })
-map("n", "<A-j>", "<C-w>j", { desc = "Go to Lower Window" })
-map("n", "<A-k>", "<C-w>k", { desc = "Go to Upper Window" })
-map("n", "<A-l>", "<C-w>l", { desc = "Go to Right Window" })
+map({ "n", "t" }, "<A-h>", "<cmd>wincmd h<cr>", { desc = "Go to Left Window" })
+map({ "n", "t" }, "<A-j>", "<cmd>wincmd j<cr>", { desc = "Go to Lower Window" })
+map({ "n", "t" }, "<A-k>", "<cmd>wincmd k<cr>", { desc = "Go to Upper Window" })
+map({ "n", "t" }, "<A-l>", "<cmd>wincmd l<cr>", { desc = "Go to Right Window" })
 
 -- Resize window
-map("n", "<A-J>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
-map("n", "<A-K>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
-map("n", "<A-H>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
-map("n", "<A-L>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
+map({ "n", "t" }, "<A-J>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
+map({ "n", "t" }, "<A-K>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
+map({ "n", "t" }, "<A-H>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
+map({ "n", "t" }, "<A-L>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 
 -- Windows
 map("n", "<leader>ww", "<cmd>Telescope windows<cr>", { desc = "Windows" })
@@ -25,7 +25,7 @@ map("n", "<leader>wj", "<C-w>j", { desc = "Go to Lower Window" })
 map("n", "<leader>wk", "<C-w>k", { desc = "Go to Upper Window" })
 map("n", "<leader>wl", "<C-w>l", { desc = "Go to Right Window" })
 map("n", "<leader>wz", "<cmd>ZenMode<cr>", { desc = "Zen Mode" })
-map("n", "<A-f>", LazyVim.toggle.maximize, { desc = "Maximize Toggle" })
+map({ "n", "t" }, "<A-f>", LazyVim.toggle.maximize, { desc = "Maximize Toggle" })
 
 -- Buffers
 map("n", "<leader>bb", "<cmd>Telescope scope buffers<cr>", { desc = "Buffers" })
