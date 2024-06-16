@@ -17,7 +17,13 @@ map({ "n", "t" }, "<A-H>", "<cmd>vertical resize +2<cr>", { desc = "Increase Win
 map({ "n", "t" }, "<A-L>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 
 -- Windows
-map("n", "<leader>ww", "<cmd>Telescope windows<cr>", { desc = "Windows" })
+map("n", "<leader>ww", function()
+  local window_id = require("window-picker").pick_window()
+  if window_id then
+    vim.api.nvim_set_current_win(window_id)
+  end
+end, { desc = "Visual Pick Window" })
+map("n", "<leader>wt", "<cmd>Telescope windows<cr>", { desc = "Telescope Windows" })
 map("n", "<leader>wr", "<C-w>p", { desc = "Switch to Recent Window" })
 map("n", "<leader>wx", "<C-w>c", { desc = "Delete Window" })
 map("n", "<leader>wh", "<C-w>h", { desc = "Go to Left Window" })
@@ -28,17 +34,17 @@ map("n", "<leader>wz", "<cmd>ZenMode<cr>", { desc = "Zen Mode" })
 map({ "n", "t" }, "<A-f>", LazyVim.toggle.maximize, { desc = "Maximize Toggle" })
 
 -- Buffers
-map("n", "<leader>bb", "<cmd>Telescope scope buffers<cr>", { desc = "Buffers" })
-map("n", "<leader>bB", "<cmd>Telescope buffers<cr>", { desc = "Current Tab Buffers" })
+map("n", "<leader>bb", "<cmd>BufferLinePick<cr>", { desc = "Visual Pick Buffer" })
+map("n", "<leader>bt", "<cmd>Telescope scope buffers<cr>", { desc = "Telescope Buffers" })
+map("n", "<leader>bT", "<cmd>Telescope buffers<cr>", { desc = "Current Tab Buffers" })
 map("n", "<leader>br", "<cmd>e #<cr>", { desc = "Switch to Recent Buffer" })
 map("n", "<leader>r", "<cmd>e #<cr>", { desc = "Switch to Recent Buffer" })
 map("n", "<leader>`", "", { desc = "which_key_ignore" })
 map("n", "<leader>bs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Search Current Buffer" })
 map("n", "<leader>bx", LazyVim.ui.bufremove, { desc = "Delete Current Buffer" })
 map("n", "<leader>bX", "<cmd>BufferLineCloseOthers<cr>", { desc = "Delete Other Buffers" })
-map("n", "<leader>bv", "<cmd>BufferLinePick<cr>", { desc = "Visual Pick Buffer" })
 map("n", "<leader>bd", "", { desc = "Delete Buffers" })
-map("n", "<leader>bdv", "<cmd>BufferLinePickClose<cr>", { desc = "Visual Delete Buffer" })
+map("n", "<leader>bdd", "<cmd>BufferLinePickClose<cr>", { desc = "Visual Delete Buffer" })
 map("n", "<leader>bdl", "<cmd>BufferLineCloseRight<cr>", { desc = "Delete Buffers to the Right" })
 map("n", "<leader>bdr", "<cmd>BufferLineCloseLeft<cr>", { desc = "Delete Buffers to the Left" })
 map("n", "<leader>bh", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })
@@ -52,7 +58,7 @@ for n = 1, 9 do
 end
 
 -- Tabs
-map("n", "<leader>tt", "<cmd>Telescope telescope-tabs list_tabs<cr>", { desc = "Tabs"})
+map("n", "<leader>tt", "<cmd>Telescope telescope-tabs list_tabs<cr>", { desc = "Telescope Tabs"})
 map("n", "<leader>tr", "g<tab>", { desc = "Switch to Recent Tab" })
 map("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New Tab" })
 map("n", "<leader>tx", "<cmd>tabclose<cr>", { desc = "Close Tab" })

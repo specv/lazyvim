@@ -21,6 +21,7 @@ return {
             enabled = true,
             indentscope_color = "green",
           },
+          window_picker = true,
         }
       }
       vim.cmd.colorscheme("catppuccin")
