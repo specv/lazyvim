@@ -6,18 +6,25 @@ return {
   event = "VeryLazy",
   keys = {
     {
+      "<leader><cr>",
+      function()
+        require("yazi").yazi()
+      end,
+      desc = "Yazi",
+    },
+    {
       "<leader>fy",
       function()
         require("yazi").yazi()
       end,
-      desc = "Open the Yazi",
+      desc = "Yazi",
     },
     {
       "<leader>fY",
       function()
         require("yazi").yazi(nil, vim.fn.getcwd())
       end,
-      desc = "Open the Yazi in working directory" ,
+      desc = "Yazi (cwd)" ,
     },
   },
   opts = {

@@ -2,6 +2,15 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+
+-- Delete Global Keymaps
+vim.keymap.del({ "n", "t" }, "<C-h>")
+vim.keymap.del({ "n", "t" }, "<C-j>")
+vim.keymap.del({ "n", "t" }, "<C-k>")
+vim.keymap.del({ "n", "t" }, "<C-l>")
+vim.keymap.del("n", "<leader>`")
+vim.keymap.del("n", "<leader>wd")
+
 local map = LazyVim.safe_keymap_set
 
 -- Move to window
@@ -23,14 +32,24 @@ map("n", "<leader>ww", function()
     vim.api.nvim_set_current_win(window_id)
   end
 end, { desc = "Visual Pick Window" })
+map("n", "<leader>wd", "", { desc = "Delete Window" })
+map("n", "<leader>wdd", function()
+  local window_id = require("window-picker").pick_window()
+  if window_id then
+    vim.api.nvim_win_close(window_id, false)
+  end
+end, { desc = "Visual Close Window" })
+map("n", "<leader>wdb", "<cmd>:bd<cr>", { desc = "Delete Window and Buffer" })
 map("n", "<leader>wt", "<cmd>Telescope windows<cr>", { desc = "Telescope Windows" })
 map("n", "<leader>wr", "<C-w>p", { desc = "Switch to Recent Window" })
-map("n", "<leader>wx", "<C-w>c", { desc = "Delete Window" })
+map("n", "<leader>r", "<C-w>p", { desc = "Switch to Recent Window" })
+map("n", "<leader>wx", "<C-w>c", { desc = "Delete Current Window" })
 map("n", "<leader>wh", "<C-w>h", { desc = "Go to Left Window" })
 map("n", "<leader>wj", "<C-w>j", { desc = "Go to Lower Window" })
 map("n", "<leader>wk", "<C-w>k", { desc = "Go to Upper Window" })
 map("n", "<leader>wl", "<C-w>l", { desc = "Go to Right Window" })
 map("n", "<leader>wz", "<cmd>ZenMode<cr>", { desc = "Zen Mode" })
+map("n", "<C-c>", "<C-w>c", { desc = "Delete Current Window" })
 map({ "n", "t" }, "<A-f>", LazyVim.toggle.maximize, { desc = "Maximize Toggle" })
 
 -- Buffers
@@ -38,8 +57,7 @@ map("n", "<leader>bb", "<cmd>BufferLinePick<cr>", { desc = "Visual Pick Buffer" 
 map("n", "<leader>bt", "<cmd>Telescope scope buffers<cr>", { desc = "Telescope Buffers" })
 map("n", "<leader>bT", "<cmd>Telescope buffers<cr>", { desc = "Current Tab Buffers" })
 map("n", "<leader>br", "<cmd>e #<cr>", { desc = "Switch to Recent Buffer" })
-map("n", "<leader>r", "<cmd>e #<cr>", { desc = "Switch to Recent Buffer" })
-map("n", "<leader>`", "", { desc = "which_key_ignore" })
+map("n", "<leader><tab>", "<cmd>e #<cr>", { desc = "Switch to Recent Buffer" })
 map("n", "<leader>bs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Search Current Buffer" })
 map("n", "<leader>bx", LazyVim.ui.bufremove, { desc = "Delete Current Buffer" })
 map("n", "<leader>bX", "<cmd>BufferLineCloseOthers<cr>", { desc = "Delete Other Buffers" })
@@ -47,17 +65,23 @@ map("n", "<leader>bd", "", { desc = "Delete Buffers" })
 map("n", "<leader>bdd", "<cmd>BufferLinePickClose<cr>", { desc = "Visual Delete Buffer" })
 map("n", "<leader>bdl", "<cmd>BufferLineCloseRight<cr>", { desc = "Delete Buffers to the Right" })
 map("n", "<leader>bdr", "<cmd>BufferLineCloseLeft<cr>", { desc = "Delete Buffers to the Left" })
+map("n", "<leader>bdw", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 map("n", "<leader>bh", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })
 map("n", "<leader>bl", "<cmd>BufferLineCycleNext<cr>", { desc = "Next Buffer" })
+map("n", "<C-j>", "<cmd>BufferLinePick<cr>", { desc = "Visual Pick Buffer" })
+map("n", "<C-k>", "<cmd>BufferLinePickClose<cr>", { desc = "Visual Delete Buffer" })
 map("n", "<C-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })
 map("n", "<C-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next Buffer" })
 map("n", "<A-,>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })
 map("n", "<A-.>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next Buffer" })
+map({ "n", "i" }, "<C-x>", LazyVim.ui.bufremove, { desc = "Delete Current Buffer" })
+map({ "n", "i" }, "<C-q>", "<cmd>:bd<cr>", { desc = "Delete Current Buffer and Window" })
 for n = 1, 9 do
-  map("n", "g" .. n, function() require("bufferline").go_to_buffer(n, true) end, { desc = 'which_key_ignore' })
+  map("n", "<C-" .. n .. ">", function() require("bufferline").go_to_buffer(n, true) end, { desc = "Go to Buffer " .. n })
 end
 
 -- Tabs
+map("n", "<leader>t", "", { desc = "tabs" })
 map("n", "<leader>tt", "<cmd>Telescope telescope-tabs list_tabs<cr>", { desc = "Telescope Tabs"})
 map("n", "<leader>tr", "g<tab>", { desc = "Switch to Recent Tab" })
 map("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New Tab" })
@@ -70,3 +94,6 @@ map("n", "<leader>t0", "<cmd>tabfirst<cr>", { desc = "First Tab" })
 map("n", "<leader>t$", "<cmd>tablast<cr>", { desc = "Last Tab" })
 map("n", "<A-[>", "<cmd>tabprevious<cr>", { desc = "Prev Tab" })
 map("n", "<A-]>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+for n = 1, 9 do
+  map("n", "<leader>t" .. n, n .. "gt", { desc = "Go to Tab " .. n })
+end

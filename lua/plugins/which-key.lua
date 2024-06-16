@@ -7,7 +7,6 @@ return {
     },
     defaults = {
       ["<leader><tab>"] = { desc = "which_key_ignore" },
-      ["<leader>t"] = { name = "tabs" },
     }
   },
 }
