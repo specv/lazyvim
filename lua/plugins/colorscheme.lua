@@ -1,32 +1,35 @@
 return {
   {
-    "sainnhe/gruvbox-material",
+    "catppuccin/nvim",
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.gruvbox_material_enable_italic = true
-      vim.g.gruvbox_material_background = "soft"
-      vim.opt.background = "dark"
-      vim.cmd.colorscheme("gruvbox-material")
+      require("catppuccin").setup {
+        flavour = "auto",
+        background = {
+          light = "latte",
+          dark = "mocha",
+        },
+        dim_inactive = {
+          enabled = true,
+          shade = "dark",
+          percentage = 0.01,
+        },
+        term_colors = true,
+        integrations = {
+          mini = {
+            enabled = true,
+            indentscope_color = "green",
+          },
+        }
+      }
+      vim.cmd.colorscheme("catppuccin")
     end,
-    keys = {
-      {
-        "<leader>wt",
-        function()
-          if vim.o.background == "light" then
-            vim.o.background = "dark"
-          else
-            vim.o.background = "light"
-          end
-        end,
-        desc = "Toggle Dark and Light Theme",
-      },
-    }
   },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "gruvbox-material",
+      colorscheme = "catppuccin",
     },
   }
 }

@@ -1,5 +1,6 @@
 return {
   "akinsho/bufferline.nvim",
+  after = "catppuccin",
   keys = {
     -- Delete Buffers to the Left
     { "<leader>bl", false },
@@ -18,14 +19,15 @@ return {
         return string.format("%s", opts.raise(opts.ordinal))
       end,
     },
-    highlights = {
-      tab_selected = {
-        fg = "#ff007f",
-      },
-      buffer_selected = {
-        bold = true,
-        italic = true,
-      },
-    },
+    -- highlights = {
+    --   tab_selected = {
+    --     fg = "#ff007f",
+    --   },
+    --   buffer_selected = {
+    --     bold = true,
+    --     italic = true,
+    --   },
+    -- },
+    highlights = require("catppuccin.groups.integrations.bufferline").get()
   },
 }
