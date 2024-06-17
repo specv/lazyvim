@@ -9,6 +9,7 @@ vim.keymap.del({ "n", "t" }, "<C-j>")
 vim.keymap.del({ "n", "t" }, "<C-k>")
 vim.keymap.del({ "n", "t" }, "<C-l>")
 vim.keymap.del("n", "<leader>`")
+vim.keymap.del("n", "<leader>L")
 vim.keymap.del("n", "<leader>wd")
 
 local map = LazyVim.safe_keymap_set
