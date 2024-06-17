@@ -24,7 +24,12 @@ return {
             indentscope_color = "green",
           },
           window_picker = true,
-        }
+        },
+        custom_highlights = function(colors)
+          return {
+            TabLineSel = { bg = "#ff007f" },
+          }
+        end
       }
       vim.cmd.colorscheme("catppuccin")
     end,
