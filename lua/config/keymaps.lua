@@ -98,3 +98,9 @@ map("n", "<A-]>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 for n = 1, 9 do
   map("n", "<leader>t" .. n, n .. "gt", { desc = "Go to Tab " .. n })
 end
+
+-- File / Find
+map("n", "<leader>fa", function() print(vim.api.nvim_buf_get_name(0)) end, { desc = "Absolutely Path of Current File" })
+---- Add border to lazy term
+map("n", "<leader>ft", function() LazyVim.terminal(nil, { border = "rounded", cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
+map("n", "<leader>fT", function() LazyVim.terminal(nil, { border = "rounded" }) end, { desc = "Terminal (cwd)" })

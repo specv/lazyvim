@@ -14,7 +14,7 @@ return {
       always_show_bufferline = true,
       show_buffer_close_icons = false,
       show_close_icon = false,
-      separator_style = "slope",
+      separator_style = "thin",
       numbers = function(opts)
         return string.format("%s", opts.raise(opts.ordinal))
       end,
@@ -28,6 +28,8 @@ return {
     --     italic = true,
     --   },
     -- },
-    highlights = require("catppuccin.groups.integrations.bufferline").get()
+    highlights = require("catppuccin.groups.integrations.bufferline").get {
+      styles = { "italic", "bold" },
+    }
   },
 }

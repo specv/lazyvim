@@ -5,18 +5,20 @@ return {
     priority = 1000,
     config = function()
       require("catppuccin").setup {
-        flavour = "auto",
+        flavour = "mocha",
         background = {
           light = "latte",
           dark = "mocha",
         },
+        transparent_background = true,
         dim_inactive = {
-          enabled = true,
+          enabled = false,
           shade = "dark",
           percentage = 0.01,
         },
         term_colors = true,
         integrations = {
+          bufferline = false,
           mini = {
             enabled = true,
             indentscope_color = "green",

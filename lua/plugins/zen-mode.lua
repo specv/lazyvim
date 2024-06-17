@@ -23,6 +23,10 @@ return {
         enabled = true,
         font = "20",
       },
+      wezterm = {
+        enabled = true,
+        font = "20",
+      },
     },
   },
 }

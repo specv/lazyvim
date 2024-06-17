@@ -1,5 +1,3 @@
 return {
-  {
-    "levouh/tint.nvim", enabled = false,
-  },
+  { "levouh/tint.nvim", enabled = false },
 }
