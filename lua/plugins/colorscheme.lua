@@ -23,6 +23,7 @@ return {
             enabled = true,
             indentscope_color = "green",
           },
+          diffview = true,
           window_picker = true,
         },
         custom_highlights = function(colors)

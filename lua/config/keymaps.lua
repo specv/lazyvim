@@ -11,6 +11,9 @@ vim.keymap.del({ "n", "t" }, "<C-l>")
 vim.keymap.del("n", "<leader>`")
 vim.keymap.del("n", "<leader>L")
 vim.keymap.del("n", "<leader>wd")
+vim.keymap.del("o", "gh")          -- mini.diff: Hunk range textobject (`vgh`, `o` for operator-pending mode / visual character mode)
+vim.keymap.del({ "n", "x" }, "gh") -- mini.diff: Apply hunks (`x` for select mode `gh`)
+vim.keymap.del({ "n", "v" }, "gH") -- mini.diff: Reset hunks (`v` for visual mode and select mode)
 
 local map = LazyVim.safe_keymap_set
 
