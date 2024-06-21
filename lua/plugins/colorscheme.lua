@@ -25,6 +25,7 @@ return {
           },
           diffview = true,
           window_picker = true,
+          ufo = true,
         },
         custom_highlights = function(colors)
           return {
