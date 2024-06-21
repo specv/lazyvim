@@ -23,11 +23,11 @@ map({ "n", "t" }, "<A-j>", "<cmd>wincmd j<cr>", { desc = "Go to Lower Window" })
 map({ "n", "t" }, "<A-k>", "<cmd>wincmd k<cr>", { desc = "Go to Upper Window" })
 map({ "n", "t" }, "<A-l>", "<cmd>wincmd l<cr>", { desc = "Go to Right Window" })
 
--- Resize window
-map({ "n", "t" }, "<A-J>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
-map({ "n", "t" }, "<A-K>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
-map({ "n", "t" }, "<A-H>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
-map({ "n", "t" }, "<A-L>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
+-- Resize window (use edgy's resize)
+-- map({ "n", "t" }, "<A-J>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
+-- map({ "n", "t" }, "<A-K>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
+-- map({ "n", "t" }, "<A-H>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
+-- map({ "n", "t" }, "<A-L>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 
 -- Windows
 map("n", "<leader>ww", function()
