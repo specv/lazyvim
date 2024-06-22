@@ -2,7 +2,6 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-
 -- Delete Global Keymaps
 vim.keymap.del({ "n", "t" }, "<C-h>")
 vim.keymap.del({ "n", "t" }, "<C-j>")
@@ -11,9 +10,18 @@ vim.keymap.del({ "n", "t" }, "<C-l>")
 vim.keymap.del("n", "<leader>`")
 vim.keymap.del("n", "<leader>L")
 vim.keymap.del("n", "<leader>wd")
-vim.keymap.del("o", "gh")          -- mini.diff: Hunk range textobject (`vgh`, `o` for operator-pending mode / visual character mode)
-vim.keymap.del({ "n", "x" }, "gh") -- mini.diff: Apply hunks (`x` for select mode `gh`)
-vim.keymap.del({ "n", "v" }, "gH") -- mini.diff: Reset hunks (`v` for visual mode and select mode)
+---- mini.diff
+vim.keymap.del("o", "gh")          -- Hunk range textobject (`vgh`, `o` for operator-pending mode / visual character mode)
+vim.keymap.del({ "n", "x" }, "gh") -- Apply hunks (`x` for select mode `gh`)
+vim.keymap.del({ "n", "v" }, "gH") -- Reset hunks (`v` for visual mode and select mode)
+---- tabs
+vim.keymap.del("n", "<leader><tab>l")
+vim.keymap.del("n", "<leader><tab>o")
+vim.keymap.del("n", "<leader><tab>f")
+vim.keymap.del("n", "<leader><tab><tab>")
+vim.keymap.del("n", "<leader><tab>]")
+vim.keymap.del("n", "<leader><tab>d")
+vim.keymap.del("n", "<leader><tab>[")
 
 local map = LazyVim.safe_keymap_set
 
@@ -30,7 +38,14 @@ map({ "n", "t" }, "<A-l>", "<cmd>wincmd l<cr>", { desc = "Go to Right Window" })
 -- map({ "n", "t" }, "<A-L>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 
 -- Windows
-map("n", "<leader>ww", function()
+map("n", "<leader>ww", "<cmd>Telescope windows<cr>", { desc = "Telescope Windows" })
+map("n", "<leader>wp", function()
+  local window_id = require("window-picker").pick_window()
+  if window_id then
+    vim.api.nvim_set_current_win(window_id)
+  end
+end, { desc = "Visual Pick Window" })
+map("n", "<C-k>", function()
   local window_id = require("window-picker").pick_window()
   if window_id then
     vim.api.nvim_set_current_win(window_id)
@@ -44,7 +59,6 @@ map("n", "<leader>wdd", function()
   end
 end, { desc = "Visual Close Window" })
 map("n", "<leader>wdb", "<cmd>:bd<cr>", { desc = "Delete Window and Buffer" })
-map("n", "<leader>wt", "<cmd>Telescope windows<cr>", { desc = "Telescope Windows" })
 map("n", "<leader>wr", "<C-w>p", { desc = "Switch to Recent Window" })
 map("n", "<leader>r", "<C-w>p", { desc = "Switch to Recent Window" })
 map("n", "<leader>wx", "<C-w>c", { desc = "Delete Current Window" })
@@ -57,9 +71,9 @@ map("n", "<C-c>", "<C-w>c", { desc = "Delete Current Window" })
 map({ "n", "t" }, "<A-f>", LazyVim.toggle.maximize, { desc = "Maximize Toggle" })
 
 -- Buffers
-map("n", "<leader>bb", "<cmd>BufferLinePick<cr>", { desc = "Visual Pick Buffer" })
-map("n", "<leader>bt", "<cmd>Telescope scope buffers<cr>", { desc = "Telescope Buffers" })
-map("n", "<leader>bT", "<cmd>Telescope buffers<cr>", { desc = "Current Tab Buffers" })
+map("n", "<leader>bp", "<cmd>BufferLinePick<cr>", { desc = "Visual Pick Buffer" })
+map("n", "<leader>bb", "<cmd>Telescope scope buffers<cr>", { desc = "Telescope Buffers" })
+map("n", "<leader>bB", "<cmd>Telescope buffers<cr>", { desc = "Current Tab Buffers" })
 map("n", "<leader>br", "<cmd>e #<cr>", { desc = "Switch to Recent Buffer" })
 map("n", "<leader><tab>", "<cmd>e #<cr>", { desc = "Switch to Recent Buffer" })
 map("n", "<leader>bs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "Search Current Buffer" })
@@ -73,7 +87,6 @@ map("n", "<leader>bdw", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 map("n", "<leader>bh", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })
 map("n", "<leader>bl", "<cmd>BufferLineCycleNext<cr>", { desc = "Next Buffer" })
 map("n", "<C-j>", "<cmd>BufferLinePick<cr>", { desc = "Visual Pick Buffer" })
-map("n", "<C-k>", "<cmd>BufferLinePickClose<cr>", { desc = "Visual Delete Buffer" })
 map("n", "<C-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })
 map("n", "<C-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next Buffer" })
 map("n", "<A-,>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })

@@ -6,7 +6,7 @@ return {
       "z=",
     },
     defaults = {
-      ["<leader><tab>"] = { desc = "which_key_ignore" },
+      --["<leader><tab>"] = { desc = "which_key_ignore" },
     }
   },
 }
