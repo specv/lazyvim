@@ -35,6 +35,10 @@ return {
     { "<leader>br", false },
     -- Delete Other Buffers
     { "<leader>bo", false },
+    -- Prev Buffer
+    { "<S-h>", false },
+    -- Next Buffer
+    { "<S-l>", false },
   },
   opts = {
     options = {

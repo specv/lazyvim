@@ -26,6 +26,7 @@ return {
           diffview = true,
           window_picker = true,
           ufo = true,
+          lsp_saga = true,
         },
         custom_highlights = function(colors)
           return {
