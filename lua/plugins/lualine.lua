@@ -4,6 +4,12 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = function(_, opts)
       table.insert(opts.sections.lualine_b, {
+        "grapple",
+        cond = function()
+          return package.loaded["grapple"] and require("grapple").exists()
+        end
+      })
+      table.insert(opts.sections.lualine_b, {
         function()
           -- lualine will display a blank placeholder even if we return an empty string
           -- return '%{&ft == "toggleterm" ? "terminal-".b:toggle_number : ""}'
