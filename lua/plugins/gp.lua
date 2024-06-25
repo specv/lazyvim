@@ -54,6 +54,83 @@ local function select_agent()
   }):find()
 end
 
+local HOOKS = {
+  UnitTests = {
+    desc = "Writes unit tests for the selected code",
+    selection = true,
+    fn = function(gp, params)
+      local template = "I have the following code from {{filename}}:\n\n"
+          .. "```{{filetype}}\n{{selection}}\n```\n\n"
+          .. "Please respond by writing table driven unit tests for the code above."
+      local agent = gp.get_command_agent()
+      gp.Prompt(params, gp.Target.enew, nil, agent.model, template, agent.system_prompt)
+    end,
+  },
+  Explain = {
+    desc = "Explains the selected code",
+    selection = true,
+    fn = function(gp, params)
+      local template = "I have the following code from {{filename}}:\n\n"
+          .. "```{{filetype}}\n{{selection}}\n```\n\n"
+          .. "Please respond by explaining the code above."
+      local agent = gp.get_chat_agent()
+      gp.Prompt(params, gp.Target.popup, nil, agent.model, template, agent.system_prompt)
+    end,
+  },
+  CodeReview = {
+    desc = "Analyze for code smells and suggest improvements for selected code",
+    selection = true,
+    fn = function(gp, params)
+      local template = "I have the following code from {{filename}}:\n\n"
+          .. "```{{filetype}}\n{{selection}}\n```\n\n"
+          .. "Please analyze for code smells and suggest improvements."
+      local agent = gp.get_chat_agent()
+      gp.Prompt(params, gp.Target.enew("markdown"), nil, agent.model, template, agent.system_prompt)
+    end,
+  },
+  Translator = {
+    desc = "Translate between English and Chinese",
+    selection = false,
+    fn = function(gp, params)
+      local agent = gp.get_command_agent()
+      local chat_system_prompt = "You are a Translator, please translate between English and Chinese."
+      gp.cmd.ChatNew(params, agent.model, chat_system_prompt)
+    end,
+  },
+}
+
+function gp_pick_command(mode)
+  local command_names = {}
+  for name, cmd in pairs(HOOKS) do
+    if mode == 'v' or (mode == 'n' and not cmd.selection) then
+      table.insert(command_names, name .. " - " .. cmd.desc)
+    end
+  end
+
+  pickers.new({}, {
+    prompt_title = 'Select Command',
+    finder = finders.new_table {
+      results = command_names
+    },
+    sorter = conf.generic_sorter({}),
+    attach_mappings = function(prompt_bufnr, map)
+      actions.select_default:replace(function()
+        actions.close(prompt_bufnr)
+        local selection = action_state.get_selected_entry()
+        local command = selection[1]:match("^(%S+)")
+        if mode == "v" then
+          command = ":<C-u>'<,'>Gp" .. command .. "<CR>"
+        else
+          command = ":Gp" .. command .. "<CR>"
+        end
+
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(command, true, false, true), "c", true)  -- 执行选中的命令
+      end)
+      return true
+    end,
+  }):find()
+end
+
 return {
   "robitx/gp.nvim",
   lazy = false,
@@ -67,6 +144,8 @@ return {
     { "<leader>ic", "<cmd>GpContext<cr>", desc = "Modify Context" },
     { "<leader>is", "<cmd>GpStop<cr>", desc = "Stop Generating" },
     { "<leader>ia", select_agent, desc = "Select Agent" },
+    { "<leader>if", function() gp_pick_command("n") end, desc = "Select Function", mode = "n" },
+    { "<leader>if", ':<C-u>lua gp_pick_command("v")<cr>', desc = "Select Function", mode = "v" },
   },
   config = function()
     local gp = require("gp")
@@ -82,48 +161,16 @@ return {
 
       return buf
     end
+
+    local hooks = {}
+    for k, v in pairs(HOOKS) do
+      hooks[k] = v.fn
+    end
     require("gp").setup {
       openai_api_endpoint = os.getenv("OPENAI_API_HOST") .. "/v1/chat/completions",
       -- [feat: add option to set chat buftype to prompt](https://github.com/Robitx/gp.nvim/issues/94)
       chat_prompt_buf_type = false,
-      hooks = {
-        -- example of adding command which writes unit tests for the selected code
-        UnitTests = function(gp, params)
-          local template = "I have the following code from {{filename}}:\n\n"
-              .. "```{{filetype}}\n{{selection}}\n```\n\n"
-              .. "Please respond by writing table driven unit tests for the code above."
-          local agent = gp.get_command_agent()
-          gp.Prompt(params, gp.Target.enew, nil, agent.model, template, agent.system_prompt)
-        end,
-        -- example of adding command which explains the selected code
-        Explain = function(gp, params)
-          local template = "I have the following code from {{filename}}:\n\n"
-              .. "```{{filetype}}\n{{selection}}\n```\n\n"
-              .. "Please respond by explaining the code above."
-          local agent = gp.get_chat_agent()
-          gp.Prompt(params, gp.Target.popup, nil, agent.model, template, agent.system_prompt)
-        end,
-        -- example of usig enew as a function specifying type for the new buffer
-        CodeReview = function(gp, params)
-          local template = "I have the following code from {{filename}}:\n\n"
-              .. "```{{filetype}}\n{{selection}}\n```\n\n"
-              .. "Please analyze for code smells and suggest improvements."
-          local agent = gp.get_chat_agent()
-          gp.Prompt(params, gp.Target.enew("markdown"), nil, agent.model, template, agent.system_prompt)
-        end,
-        -- example of adding command which opens new chat dedicated for translation
-        Translator = function(gp, params)
-          local agent = gp.get_command_agent()
-          local chat_system_prompt = "You are a Translator, please translate between English and Chinese."
-          gp.cmd.ChatNew(params, agent.model, chat_system_prompt)
-        end,
-        -- example of making :%GpChatNew a dedicated command which
-        -- opens new chat with the entire current buffer as a context
-        BufferChatNew = function(gp, _)
-            -- call GpChatNew command in range mode on whole buffer
-            vim.api.nvim_command("%" .. gp.config.cmd_prefix .. "ChatNew")
-        end,
-      }
+      hooks = hooks,
     }
   end
 }
