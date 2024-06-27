@@ -170,6 +170,9 @@ return {
       openai_api_endpoint = os.getenv("OPENAI_API_HOST") .. "/v1/chat/completions",
       -- [feat: add option to set chat buftype to prompt](https://github.com/Robitx/gp.nvim/issues/94)
       chat_prompt_buf_type = false,
+      chat_user_prefix = "# 🗨",
+      chat_assistant_prefix = { "# 🤖 ", "{{agent}}" },
+      chat_free_cursor = false,
       hooks = hooks,
     }
   end
