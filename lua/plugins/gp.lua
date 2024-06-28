@@ -54,6 +54,52 @@ local function select_agent()
   }):find()
 end
 
+function fork()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local current_filename = vim.api.nvim_buf_get_name(bufnr)
+  if not (string.find(current_filename, "/gp/chats") and string.match(current_filename, "%.md$")) then
+    return
+  end
+
+  local winnr = vim.api.nvim_get_current_win()
+  local cursor_pos = vim.api.nvim_win_get_cursor(winnr)
+  local current_line = cursor_pos[1]
+  if current_line == 1 then
+    return
+  end
+  local gp = require("gp")
+  local time = os.date("%Y-%m-%d.%H-%M-%S")
+  local stamp = tostring(math.floor(vim.loop.hrtime() / 1000000) % 1000)
+  while #stamp < 3 do
+    stamp = "0" .. stamp
+  end
+  time = time .. "." .. stamp
+  local new_filename = gp.config.chat_dir .. "/" .. time .. ".md"
+  local file = io.open(new_filename, "w")
+  if not file then
+    return
+  end
+
+  local lines_above = vim.api.nvim_buf_get_lines(bufnr, 0, current_line - 1, false)
+  for i, line in ipairs(lines_above) do
+    if i == 1 then
+      line = line .. " (Fork)"
+    end
+    file:write(line .. "\n")
+  end
+  if lines_above[#lines_above] ~= gp.config.chat_user_prefix then
+    file:write(gp.config.chat_user_prefix .. "\n")
+  end
+  file:write("\n")
+  file:close()
+
+
+  vim.cmd("edit " .. new_filename)
+  vim.api.nvim_command("normal! G")
+  print("Forked to " .. new_filename)
+end
+
+
 local HOOKS = {
   UnitTests = {
     desc = "Writes unit tests for the selected code",
@@ -146,6 +192,7 @@ return {
     { "<leader>ia", select_agent, desc = "Select Agent" },
     { "<leader>if", function() gp_pick_command("n") end, desc = "Select Function", mode = "n" },
     { "<leader>if", ':<C-u>lua gp_pick_command("v")<cr>', desc = "Select Function", mode = "v" },
+    { "<leader>ik", fork, desc = "Fork" },
   },
   config = function()
     local gp = require("gp")
