@@ -10,7 +10,7 @@ return {
         signcolumn = "no",
         foldcolumn = "0",
         list = false,
-      }
+      },
     },
     plugins = {
       options = {

@@ -8,5 +8,5 @@ return {
       ft = "aerial",
       open = "AerialOpen!",
     })
-  end
+  end,
 }

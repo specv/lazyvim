@@ -1,8 +1,8 @@
-local actions = require('telescope.actions')
-local action_state = require('telescope.actions.state')
-local pickers = require('telescope.pickers')
-local finders = require('telescope.finders')
-local conf = require('telescope.config').values
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local conf = require("telescope.config").values
 
 local function get_relevant_agents()
   local gp = require("gp")
@@ -34,24 +34,26 @@ end
 local function select_agent()
   local gp = require("gp")
   local agents, is_chat = get_relevant_agents()
-  local prompt_title = is_chat and 'Select Chat Agent' or 'Select Command Agent'
+  local prompt_title = is_chat and "Select Chat Agent" or "Select Command Agent"
 
-  pickers.new({}, {
-    prompt_title = prompt_title,
-    finder = finders.new_table {
-      results = agents
-    },
-    sorter = conf.generic_sorter({}),
-    attach_mappings = function(prompt_bufnr, map)
-      actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        local selection = action_state.get_selected_entry()
-        local agent_name = selection[1]:sub(3)
-        gp.cmd.Agent({ args = agent_name })
-      end)
-      return true
-    end,
-  }):find()
+  pickers
+    .new({}, {
+      prompt_title = prompt_title,
+      finder = finders.new_table({
+        results = agents,
+      }),
+      sorter = conf.generic_sorter({}),
+      attach_mappings = function(prompt_bufnr, map)
+        actions.select_default:replace(function()
+          actions.close(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
+          local agent_name = selection[1]:sub(3)
+          gp.cmd.Agent({ args = agent_name })
+        end)
+        return true
+      end,
+    })
+    :find()
 end
 
 function fork()
@@ -93,12 +95,10 @@ function fork()
   file:write("\n")
   file:close()
 
-
   vim.cmd("edit " .. new_filename)
   vim.api.nvim_command("normal! G")
   print("Forked to " .. new_filename)
 end
-
 
 local HOOKS = {
   UnitTests = {
@@ -106,8 +106,8 @@ local HOOKS = {
     selection = true,
     fn = function(gp, params)
       local template = "I have the following code from {{filename}}:\n\n"
-          .. "```{{filetype}}\n{{selection}}\n```\n\n"
-          .. "Please respond by writing table driven unit tests for the code above."
+        .. "```{{filetype}}\n{{selection}}\n```\n\n"
+        .. "Please respond by writing table driven unit tests for the code above."
       local agent = gp.get_command_agent()
       gp.Prompt(params, gp.Target.enew, nil, agent.model, template, agent.system_prompt)
     end,
@@ -117,8 +117,8 @@ local HOOKS = {
     selection = true,
     fn = function(gp, params)
       local template = "I have the following code from {{filename}}:\n\n"
-          .. "```{{filetype}}\n{{selection}}\n```\n\n"
-          .. "Please respond by explaining the code above."
+        .. "```{{filetype}}\n{{selection}}\n```\n\n"
+        .. "Please respond by explaining the code above."
       local agent = gp.get_chat_agent()
       gp.Prompt(params, gp.Target.popup, nil, agent.model, template, agent.system_prompt)
     end,
@@ -128,8 +128,8 @@ local HOOKS = {
     selection = true,
     fn = function(gp, params)
       local template = "I have the following code from {{filename}}:\n\n"
-          .. "```{{filetype}}\n{{selection}}\n```\n\n"
-          .. "Please analyze for code smells and suggest improvements."
+        .. "```{{filetype}}\n{{selection}}\n```\n\n"
+        .. "Please analyze for code smells and suggest improvements."
       local agent = gp.get_chat_agent()
       gp.Prompt(params, gp.Target.enew("markdown"), nil, agent.model, template, agent.system_prompt)
     end,
@@ -148,33 +148,35 @@ local HOOKS = {
 function gp_pick_command(mode)
   local command_names = {}
   for name, cmd in pairs(HOOKS) do
-    if mode == 'v' or (mode == 'n' and not cmd.selection) then
+    if mode == "v" or (mode == "n" and not cmd.selection) then
       table.insert(command_names, name .. " - " .. cmd.desc)
     end
   end
 
-  pickers.new({}, {
-    prompt_title = 'Select Command',
-    finder = finders.new_table {
-      results = command_names
-    },
-    sorter = conf.generic_sorter({}),
-    attach_mappings = function(prompt_bufnr, map)
-      actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        local selection = action_state.get_selected_entry()
-        local command = selection[1]:match("^(%S+)")
-        if mode == "v" then
-          command = ":<C-u>'<,'>Gp" .. command .. "<CR>"
-        else
-          command = ":Gp" .. command .. "<CR>"
-        end
+  pickers
+    .new({}, {
+      prompt_title = "Select Command",
+      finder = finders.new_table({
+        results = command_names,
+      }),
+      sorter = conf.generic_sorter({}),
+      attach_mappings = function(prompt_bufnr, map)
+        actions.select_default:replace(function()
+          actions.close(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
+          local command = selection[1]:match("^(%S+)")
+          if mode == "v" then
+            command = ":<C-u>'<,'>Gp" .. command .. "<CR>"
+          else
+            command = ":Gp" .. command .. "<CR>"
+          end
 
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(command, true, false, true), "c", true)  -- 执行选中的命令
-      end)
-      return true
-    end,
-  }):find()
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(command, true, false, true), "c", true) -- 执行选中的命令
+        end)
+        return true
+      end,
+    })
+    :find()
 end
 
 return {
@@ -190,7 +192,14 @@ return {
     { "<leader>ic", "<cmd>GpContext<cr>", desc = "Modify Context" },
     { "<leader>is", "<cmd>GpStop<cr>", desc = "Stop Generating" },
     { "<leader>ia", select_agent, desc = "Select Agent" },
-    { "<leader>if", function() gp_pick_command("n") end, desc = "Select Function", mode = "n" },
+    {
+      "<leader>if",
+      function()
+        gp_pick_command("n")
+      end,
+      desc = "Select Function",
+      mode = "n",
+    },
     { "<leader>if", ':<C-u>lua gp_pick_command("v")<cr>', desc = "Select Function", mode = "v" },
     { "<leader>ik", fork, desc = "Fork" },
   },
@@ -200,7 +209,7 @@ return {
     gp.open_buf = function(...)
       local buf = o_open_buf(...)
       -- disable cmp
-      require("cmp.config").set_buffer( { enabled = false }, buf )
+      require("cmp.config").set_buffer({ enabled = false }, buf)
       -- disable spell check
       vim.api.nvim_buf_set_option(buf, "spell", false)
       -- disable markdownlint (also in nvim-lint.lua)
@@ -213,7 +222,7 @@ return {
     for k, v in pairs(HOOKS) do
       hooks[k] = v.fn
     end
-    require("gp").setup {
+    require("gp").setup({
       openai_api_endpoint = os.getenv("OPENAI_API_HOST") .. "/v1/chat/completions",
       -- [feat: add option to set chat buftype to prompt](https://github.com/Robitx/gp.nvim/issues/94)
       chat_prompt_buf_type = false,
@@ -221,6 +230,6 @@ return {
       chat_assistant_prefix = { "# 🤖 ", "{{agent}}" },
       chat_free_cursor = false,
       hooks = hooks,
-    }
-  end
+    })
+  end,
 }

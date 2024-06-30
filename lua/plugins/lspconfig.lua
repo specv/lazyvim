@@ -7,5 +7,5 @@ return {
     -- [Customizing LSP Keymaps](https://www.lazyvim.org/plugins/lsp#%EF%B8%8F-customizing-lsp-keymaps)
     local keys = require("lazyvim.plugins.lsp.keymaps").get()
     keys[#keys + 1] = { "<c-k>", false, mode = "i" }
-  end
+  end,
 }

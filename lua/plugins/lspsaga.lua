@@ -23,18 +23,18 @@ return {
     { "<leader>ll", "<cmd>LspInfo<cr>", desc = "LSP Info" },
   },
   config = function()
-    require("lspsaga").setup {
+    require("lspsaga").setup({
       ui = {
         kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
       },
       symbol_in_winbar = {
-        enable = false
+        enable = false,
       },
       outline = {
-        layout = "float"
+        layout = "float",
       },
       lightbulb = {
-        enable = false
+        enable = false,
       },
       diagnostic = {
         show_code_action = false,
@@ -48,7 +48,7 @@ return {
           tabe = "<C-t>",
           quit = "q",
           close = "<C-c>",
-        }
+        },
       },
       definition = {
         keys = {
@@ -58,8 +58,8 @@ return {
           tabe = "<C-t>",
           quit = "q",
           close = "<C-c>",
-        }
-      }
-    }
+        },
+      },
+    })
   end,
 }

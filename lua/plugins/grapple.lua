@@ -1,7 +1,7 @@
 return {
   "cbochs/grapple.nvim",
   dependencies = {
-    { "nvim-tree/nvim-web-devicons", lazy = true }
+    { "nvim-tree/nvim-web-devicons", lazy = true },
   },
   keys = {
     { "<leader>0", "<cmd>Grapple toggle<cr>", desc = "Grapple Toggle File" },

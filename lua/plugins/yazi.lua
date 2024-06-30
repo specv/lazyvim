@@ -24,10 +24,10 @@ return {
       function()
         require("yazi").yazi(nil, vim.fn.getcwd())
       end,
-      desc = "Yazi (cwd)" ,
+      desc = "Yazi (cwd)",
     },
   },
   opts = {
-      open_for_directories = false,
+    open_for_directories = false,
   },
 }

@@ -7,7 +7,7 @@ return {
         "grapple",
         cond = function()
           return package.loaded["grapple"] and require("grapple").exists()
-        end
+        end,
       })
       table.insert(opts.sections.lualine_b, {
         function()
@@ -27,8 +27,8 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       options = {
-        theme = "catppuccin"
-      }
-    }
-  }
+        theme = "catppuccin",
+      },
+    },
+  },
 }

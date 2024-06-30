@@ -4,7 +4,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      require("catppuccin").setup {
+      require("catppuccin").setup({
         flavour = "mocha",
         background = {
           light = "latte",
@@ -32,8 +32,8 @@ return {
           return {
             TabLineSel = { bg = "#ff007f" },
           }
-        end
-      }
+        end,
+      })
       vim.cmd.colorscheme("catppuccin")
     end,
   },
@@ -42,5 +42,5 @@ return {
     opts = {
       colorscheme = "catppuccin",
     },
-  }
+  },
 }

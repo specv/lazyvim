@@ -6,6 +6,6 @@ return {
       ["<C-k>"] = false,
       ["j"] = "actions.down_and_scroll",
       ["k"] = "actions.up_and_scroll",
-    }
+    },
   },
 }

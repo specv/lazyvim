@@ -10,5 +10,5 @@ return {
       end,
       desc = "Harpoon File",
     },
-  }
+  },
 }

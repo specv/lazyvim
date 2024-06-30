@@ -1,4 +1,4 @@
--- Do some hack to enhance bufferline's appearance in transparent 
+-- Do some hack to enhance bufferline's appearance in transparent
 -- background by defined a new option `separator_style_tab`
 local constants = require("bufferline.constants")
 constants.sep_chars.slash = { "", "/" }
@@ -18,7 +18,7 @@ end
 
 -- Override catppuccin's bufferline colorscheme
 local palette = require("catppuccin.palettes").get_palette()
-local highlights = require("catppuccin.groups.integrations.bufferline").get{ styles = {} }()
+local highlights = require("catppuccin.groups.integrations.bufferline").get({ styles = {} })()
 highlights.buffer_visible.fg = palette.surface2
 highlights.tab_separator_selected.underline = true
 highlights.tab_selected.fg = "#ff007f"

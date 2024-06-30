@@ -3,5 +3,5 @@ return {
   keys = {
     { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Diffview" },
   },
-  opts = { },
+  opts = {},
 }

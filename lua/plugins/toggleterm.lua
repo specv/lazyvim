@@ -3,7 +3,7 @@ return {
   lazy = false,
   keys = {
     { "<leader>gg", "<cmd>lua toggleterm_lazygit_toggle()<CR>", desc = "Lazygit" },
-    { "<leader>gG", "", desc = "" }
+    { "<leader>gG", "", desc = "" },
   },
   config = function()
     require("toggleterm").setup({
@@ -19,15 +19,15 @@ return {
       terminal_mappings = true,
       highlights = {
         -- set border color, link to catppuccin FloatBorder
-        FloatBorder = { link = "FloatBorder" }
+        FloatBorder = { link = "FloatBorder" },
       },
     })
 
-    local Terminal  = require('toggleterm.terminal').Terminal
+    local Terminal = require("toggleterm.terminal").Terminal
     local lazygit = Terminal:new({
       cmd = "lazygit",
       count = 11,
-      hidden = true ,
+      hidden = true,
       direction = "float",
       float_opts = {
         border = "single",
@@ -36,5 +36,5 @@ return {
     function toggleterm_lazygit_toggle()
       lazygit:toggle()
     end
-  end
+  end,
 }
