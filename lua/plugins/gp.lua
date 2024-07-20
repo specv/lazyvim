@@ -223,7 +223,44 @@ return {
       hooks[k] = v.fn
     end
     require("gp").setup({
-      openai_api_endpoint = os.getenv("OPENAI_API_HOST") .. "/v1/chat/completions",
+      providers = {
+        openai = {
+          endpoint = os.getenv("OPENAI_API_HOST") .. "/v1/chat/completions",
+          secret = os.getenv("OPENAI_API_KEY"),
+        },
+        ollama = {
+          endpoint = "http://localhost:11434/v1/chat/completions",
+        },
+      },
+      agents = {
+        {
+          provider = "ollama",
+          name = "ChatOllamaMistral",
+          chat = true,
+          command = false,
+          model = {
+            model = "mistral",
+            num_ctx = 8192,
+          },
+          system_prompt = "You are a general AI assistant.",
+        },
+        {
+          provider = "ollama",
+          name = "CodeOllamaMistral",
+          chat = false,
+          command = true,
+          model = {
+            model = "mistral",
+            temperature = 1.9,
+            top_p = 1,
+            num_ctx = 8192,
+          },
+          system_prompt = "You are an AI working as a code editor providing answers.\n\n"
+            .. "Use 4 SPACES FOR INDENTATION.\n"
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
+        },
+      },
       -- [feat: add option to set chat buftype to prompt](https://github.com/Robitx/gp.nvim/issues/94)
       chat_prompt_buf_type = false,
       chat_user_prefix = "# 🗨",

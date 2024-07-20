@@ -9,7 +9,6 @@ vim.keymap.del({ "n", "t" }, "<C-k>")
 vim.keymap.del({ "n", "t" }, "<C-l>")
 vim.keymap.del("n", "<leader>`")
 vim.keymap.del("n", "<leader>L")
-vim.keymap.del("n", "<leader>wd")
 ---- mini.diff
 vim.keymap.del("o", "gh") -- Hunk range textobject (`vgh`, `o` for operator-pending mode / visual character mode)
 vim.keymap.del({ "n", "x" }, "gh") -- Apply hunks (`x` for select mode `gh`)
@@ -81,7 +80,7 @@ map("n", "<leader>w9", ":lua vim.api.nvim_set_current_win(vim.fn.win_getid(9))<C
 map("n", "<leader>w0", ":lua vim.api.nvim_set_current_win(vim.fn.win_getid(1))<CR>", { desc = "First Window" })
 map("n", "<leader>w$", ":lua vim.api.nvim_set_current_win(vim.fn.win_getid(vim.fn.winnr('$')))<CR>", { desc = "Last Window" })
 map("n", "<C-c>", "<C-w>c", { desc = "Delete Current Window" })
-map({ "n", "t" }, "<A-f>", LazyVim.toggle.maximize, { desc = "Maximize Toggle" })
+map({ "n", "t" }, "<A-f>", function() LazyVim.toggle.maximize() end, { desc = "Maximize Toggle" })
 
 -- Buffers
 map("n", "<leader>bp", "<cmd>BufferLinePick<cr>", { desc = "Visual Pick Buffer" })
