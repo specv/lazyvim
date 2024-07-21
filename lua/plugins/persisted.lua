@@ -29,6 +29,7 @@ return {
       group = group,
       callback = function(session)
         require("edgy").close()
+        vim.cmd("MinimapClose")
 
         -- Close any tabs with these filetypes
         local fts_to_match = { "Neogit", "Diffview" }
