@@ -9,6 +9,7 @@ return {
       pattern = {
         "yazi",
         "aerial",
+        "glowpreview",
       },
       callback = function()
         vim.b.miniindentscope_disable = true
