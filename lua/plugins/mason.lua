@@ -3,4 +3,9 @@ return {
   keys = {
     { "<leader>cm", false },
   },
+  opts = {
+    ensure_installed = {
+      "svelte-language-server",
+    }
+  },
 }
