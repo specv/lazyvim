@@ -1,10 +1,7 @@
 return {
   "folke/which-key.nvim",
   opts = {
-    triggers_nowait = {
-      -- spelling
-      "z=",
-    },
+    delay = 200,
     defaults = {
       --["<leader><tab>"] = { desc = "which_key_ignore" },
     },
