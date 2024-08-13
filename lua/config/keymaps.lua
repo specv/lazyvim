@@ -155,3 +155,15 @@ end, { desc = "Terminal (Root Dir)" })
 map("n", "<leader>fT", function()
   LazyVim.terminal(nil, { border = "rounded" })
 end, { desc = "Terminal (cwd)" })
+
+-- Search
+map("n", "<leader>s.", function()
+  local current_file = vim.fn.expand('%:p')
+  local directory = vim.fn.fnamemodify(current_file, ':h')
+
+  require("telescope.builtin").live_grep({
+    search = "",
+    prompt_title = "Grep in " .. directory,
+    cwd = directory,
+  })
+end, { desc = "Grep (Current Dir)" })
