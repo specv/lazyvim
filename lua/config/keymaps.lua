@@ -2,6 +2,14 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+local function count_cmd(cmd)
+  return function()
+    for _ = 1, vim.v.count1 do
+      vim.cmd(cmd)
+    end
+  end
+end
+
 -- Delete Global Keymaps
 vim.keymap.del({ "n", "t" }, "<C-h>")
 vim.keymap.del({ "n", "t" }, "<C-j>")
@@ -96,8 +104,8 @@ map("n", "<leader>bx0", "<cmd>BufferLineCloseLeft<cr>", { desc = "Delete Buffers
 map("n", "<leader>bx$", "<cmd>BufferLineCloseRight<cr>", { desc = "Delete Buffers to the Right" })
 map("n", "<leader>bxv", "<cmd>BufferLinePickClose<cr>", { desc = "Visual Delete Buffer" })
 map("n", "<leader>bxw", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
-map("n", "<leader>bh", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })
-map("n", "<leader>bl", "<cmd>BufferLineCycleNext<cr>", { desc = "Next Buffer" })
+map("n", "<leader>bh", count_cmd("BufferLineCyclePrev"), { desc = "Prev Buffer" })
+map("n", "<leader>bl", count_cmd("BufferLineCycleNext"), { desc = "Next Buffer" })
 map("n", "<leader>b1", "<cmd>BufferLineGoToBuffer 1<cr>", { desc = "Go to Buffer 1" })
 map("n", "<leader>b2", "<cmd>BufferLineGoToBuffer 2<cr>", { desc = "Go to Buffer 2" })
 map("n", "<leader>b3", "<cmd>BufferLineGoToBuffer 3<cr>", { desc = "Go to Buffer 3" })
@@ -109,13 +117,13 @@ map("n", "<leader>b8", "<cmd>BufferLineGoToBuffer 8<cr>", { desc = "Go to Buffer
 map("n", "<leader>b9", "<cmd>BufferLineGoToBuffer 9<cr>", { desc = "Go to Buffer 9" })
 map("n", "<leader>b0", "<cmd>BufferLineGoToBuffer 1<cr>", { desc = "First Buffer" })
 map("n", "<leader>b$", "<cmd>BufferLineGoToBuffer $<cr>", { desc = "Last Buffer" })
-map("n", "<leader>b<", "<cmd>BufferLineMovePrev<cr>", { desc = "Move Buffer To Prev" })
-map("n", "<leader>b>", "<cmd>BufferLineMoveNext<cr>", { desc = "Move Buffer To Next" })
+map("n", "<leader>b<", count_cmd("BufferLineMovePrev"), { desc = "Move Buffer To Prev" })
+map("n", "<leader>b>", count_cmd("BufferLineMoveNext"), { desc = "Move Buffer To Next" })
 map("n", "<C-j>", "<cmd>BufferLinePick<cr>", { desc = "Visual Pick Buffer" })
-map("n", "<C-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })
-map("n", "<C-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next Buffer" })
-map("n", "<A-,>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })
-map("n", "<A-.>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next Buffer" })
+map("n", "<C-h>", count_cmd("BufferLineCyclePrev"), { desc = "Prev Buffer" })
+map("n", "<C-l>", count_cmd("BufferLineCycleNext"), { desc = "Next Buffer" })
+map("n", "<A-,>", count_cmd("BufferLineCyclePrev"), { desc = "Prev Buffer" })
+map("n", "<A-.>", count_cmd("BufferLineCycleNext"), { desc = "Next Buffer" })
 map({ "n", "i" }, "<C-x>", LazyVim.ui.bufremove, { desc = "Delete Current Buffer" })
 map({ "n", "i" }, "<C-q>", "<cmd>:bd<cr>", { desc = "Delete Current Buffer and Window" })
 for n = 1, 9 do
